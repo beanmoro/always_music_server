@@ -2,6 +2,12 @@
 
 Desafio Evaluado de DesafioLatam, el cual pide crear un servidor el cual permita hacer un CRUD hacia una base de datos de PostgreSQL mediante el uso de las librerias ExpressJS y PG.
 
+### IMPORTANTE:
+Es necesario crear el archivo .env de la siguiente manera en la raiz del proyecto:
+```
+CONNECTION_STRING="postgresql://<user>:<password>@localhost:5432/<db_name>"
+```
+
 ### Script usado para la DB de PostgreSQL
 ```
 DROP TABLE IF EXISTS students;
