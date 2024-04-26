@@ -1,9 +1,5 @@
-# Desafío - Always Music
+CREATE DATABASE always_music;
 
-Desafio Evaluado de DesafioLatam, el cual pide crear un servidor el cual permita hacer un CRUD hacia una base de datos de PostgreSQL mediante el uso de las librerias ExpressJS y PG.
-
-### Script usado para la DB de PostgreSQL
-```
 DROP TABLE IF EXISTS students;
 
 CREATE TABLE students(
@@ -25,5 +21,4 @@ VALUES
     ('88888888-8', 'David Gómez', 'Trompeta', 3),
     ('99999999-9', 'Elena Ruiz', 'Armonía', 1),
     ('10101010-0', 'Sofía Torres', 'Composición', 2);
-	
-```
+
