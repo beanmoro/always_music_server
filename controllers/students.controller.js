@@ -3,7 +3,19 @@ import { studentModel } from "../models/student.model.js";
 const getStudents = async (_, res) => {
   try {
     const students = await studentModel.all();
-    return res.json({ ok: true, students });
+    const studentObjs = [];
+
+    students.forEach(s =>{
+      const obj = {
+        rut: s[0],
+        name: s[1],
+        course: s[2],
+        level: s[3]
+      }
+      studentObjs.push(obj);
+    })
+
+    return res.json({ ok: true, students: studentObjs });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ ok: false });
@@ -14,7 +26,13 @@ const getStudent = async (req, res) => {
   try {
     const { rut } = req.params;
     const student = await studentModel.one(rut);
-    return res.json({ ok: true, student });
+    const studentObj = {
+      rut: student[0][0],
+      name: student[0][1],
+      course: student[0][2],
+      level: student[0][3]
+    }
+    return res.json({ ok: true, student: studentObj });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ ok: false });
@@ -25,7 +43,13 @@ const createStudent = async (req, res) => {
   try {
     const { rut, name, course, level } = req.body;
     const student = await studentModel.create({ rut, name, course, level });
-    return res.json({ ok: true, student });
+    const studentObj = {
+      rut: student[0][0],
+      name: student[0][1],
+      course: student[0][2],
+      level: student[0][3]
+    }
+    return res.json({ ok: true, student: studentObj });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ ok: false });
@@ -42,7 +66,14 @@ const updateStudent = async (req, res) => {
       course,
       level,
     });
-    return res.json({ ok: true, student });
+
+    const studentObj = {
+      rut: student[0][0],
+      name: student[0][1],
+      course: student[0][2],
+      level: student[0][3]
+    }
+    return res.json({ ok: true, student: studentObj });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ ok: false });
@@ -53,7 +84,13 @@ const removeStudent = async (req, res) => {
   try {
     const { rut } = req.params;
     const student = await studentModel.remove(rut);
-    return res.json({ ok: true, removed: student });
+    const studentObj = {
+      rut: student[0][0],
+      name: student[0][1],
+      course: student[0][2],
+      level: student[0][3]
+    }
+    return res.json({ ok: true, removed: studentObj });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ ok: false });

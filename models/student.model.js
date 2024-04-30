@@ -1,40 +1,58 @@
 import { pool } from "../database/db_connection.js";
 
 const one = async (rut) => {
-  const { rows } = await pool.query("SELECT * FROM STUDENTS WHERE rut = $1", [
-    rut,
-  ]);
+  const query = {
+    text: "SELECT * FROM STUDENTS WHERE rut = $1",
+    values: [rut],
+    rowMode: "array"
+  };
+
+  const { rows } = await pool.query(query);
   return rows;
 };
 
 const all = async () => {
-  const { rows } = await pool.query("SELECT * FROM STUDENTS ORDER BY rut ASC");
+  const query = {
+    text: "SELECT * FROM STUDENTS ORDER BY rut ASC",
+    values: [],
+    rowMode: "array"
+  };
+
+  const { rows } = await pool.query(query);
   return rows;
 };
 
 const create = async (student) => {
   const { rut, name, course, level } = student;
-  const { rows } = await pool.query(
-    "INSERT INTO STUDENTS(rut, name, course, level) VALUES ($1, $2, $3, $5) RETURNING *;",
-    [rut, name, course, level]
-  );
+
+  const query = {
+    text: "INSERT INTO STUDENTS(rut, name, course, level) VALUES ($1, $2, $3, $5) RETURNING *;",
+    values: [rut, name, course, level],
+    rowMode: "array"
+  };
+  const { rows } = await pool.query(query);
   return rows;
 };
 
 const update = async (_rut, student) => {
   const { rut = _rut, name, course, level = 1 } = student;
-  const { rows } = await pool.query(
-    "UPDATE STUDENTS SET rut = $1, name = $2, course = $3, level = $4 WHERE rut = $5 RETURNING *;",
-    [rut, name, course, level, _rut]
-  );
+
+  const query = {
+    text: "UPDATE STUDENTS SET rut = $1, name = $2, course = $3, level = $4 WHERE rut = $5 RETURNING *;",
+    values: [rut, name, course, level, _rut],
+    rowMode: "array"
+  };
+  const { rows } = await pool.query(query);
   return rows;
 };
 
 const remove = async (rut) => {
-  const { rows } = await pool.query(
-    "DELETE FROM STUDENTS WHERE rut = $1 RETURNING *;",
-    [rut]
-  );
+  const query = {
+    text: "DELETE FROM STUDENTS WHERE rut = $1 RETURNING *;",
+    values: [rut],
+    rowMode: "array"
+  };
+  const { rows } = await pool.query(query);
   return rows;
 };
 
